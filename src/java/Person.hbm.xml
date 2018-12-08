@@ -4,21 +4,21 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-    <class name = "PERSON" table = "PERSON">
+    <class name = "Person" table = "Person">
       
         <meta attribute = "class-description">
-            This class contains the student detail. 
+            This class contains the person detail. 
         </meta>
       
-        <id name = "ID" type = "int" column = "ID">
+        <id name = "id" column = "id" type = "int">
             <generator class="native"/>
         </id>
       
         <property name = "FirstName" column = "FirstName" type = "string"/>
         <property name = "LastName" column = "LastName" type = "string"/>
         <property name = "ClassStanding" column = "ClassStanding" type = "string"/>
-        <property name = "BuildingName" column = "BuildingName" type = "string"/>
-        <property name = "ApartmentNumber" column = "ApartmentNumber" type = "number"/>
+        <property name = "Building" column = "Building" type = "string"/>
+        <property name = "ApartmentNumber" column = "ApartmentNumber" type = "int"/>
       
     </class>
 </hibernate-mapping>

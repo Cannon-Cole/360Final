@@ -1,5 +1,6 @@
-package Model;
 
+
+import Model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

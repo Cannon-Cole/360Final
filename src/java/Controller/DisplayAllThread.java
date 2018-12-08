@@ -17,18 +17,18 @@ import org.hibernate.Query;
  */
 public class DisplayAllThread implements Runnable {
 
-    private String table;
-    
+    @Override
     public void run() {
-        String hql = "SELECT * FROM Employee E";
+        PassAround.message = "in thread";
+        String hql = "SELECT * FROM Person";
         Query query = Hibernate.getFactory().openSession().createQuery(hql);
         List<Person> results = query.list();
         String table = "<table>";
-        
-        for(int i = 0; i < results.size(); i++){
+
+        for (int i = 0; i < results.size(); i++) {
             table += "<tr>";
             table += "<th>";
-            table += Integer.toString(results.get(i).getID());
+            table += Integer.toString(results.get(i).getid());
             table += results.get(i).getFirstName();
             table += results.get(i).getLastName();
             table += results.get(i).getClassStanding();
@@ -37,19 +37,9 @@ public class DisplayAllThread implements Runnable {
             table += "</th>";
             table += "</tr>";
         }
-        
+
         table += "</table>";
-        
+
         PassAround.table = table;
     }
-
-    public String getTable() {
-        return table;
-    }
-
-    public void setTable(String table) {
-        this.table = table;
-    }
-    
-    
 }

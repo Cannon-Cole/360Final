@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class PassAround {
     public static String table;
     public static ThreadPoolExecutor threadPool;
+    public static String message;
 
     public static String getTable() {
         return table;
