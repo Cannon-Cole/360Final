@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -81,46 +82,55 @@ public class MainControl extends HttpServlet {
 //        AppControl.handleRequest(action);
 //
 //        PassAround.threadPool.shutdown();
-
         try {
             SessionFactory factory = new Configuration().configure().buildSessionFactory();
+            SessionFactory fac = factory;
+            Session ses = fac.openSession();
 
+            String hql = "SELECT p FROM Person p";
+            Query<Person> query = ses.createQuery(hql);
+
+            List genericPerson = query.list();
+
+            List<Person> results = genericPerson;
+
+            String table = "<table>";
+
+            for (int i = 0; i < results.size(); i++) {
+                table += "<tr>";
+                table += "<td>";
+                table += Integer.toString(results.get(i).getid());
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getFirstName();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getLastName();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getClassStanding();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getBuilding();
+                table += "</td>";
+                table += "<td>";
+                table += Integer.toString(results.get(i).getApartmentNumber());
+                table += "</td>";
+                table += "</tr>";
+            }
+
+            table += "</table>";
+
+            PassAround.table = table;
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
 
-//            SessionFactory fac = factory;
-//            Session ses = fac.openSession();
-//
-//            String hql = "SELECT * FROM Person";
-//            Query query = ses.createQuery(hql);
-//
-//            List<Person> results = query.list();
-//            String table = "<table>";
-//
-//            for (int i = 0; i < results.size(); i++) {
-//                table += "<tr>";
-//                table += "<th>";
-//                table += Integer.toString(results.get(i).getID());
-//                table += results.get(i).getFirstName();
-//                table += results.get(i).getLastName();
-//                table += results.get(i).getClassStanding();
-//                table += results.get(i).getBuilding();
-//                table += results.get(i).getApartmentNumber();
-//                table += "</th>";
-//                table += "</tr>";
-//            }
-//
-//            table += "</table>";
-//
-//            PassAround.table = table;
-
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
             out.print(PassAround.table);
-            out.print(PassAround.message);
         }
     }
 
