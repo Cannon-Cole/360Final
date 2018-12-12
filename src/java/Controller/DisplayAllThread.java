@@ -32,6 +32,7 @@ public class DisplayAllThread implements Runnable {
 
             List genericPerson = query.list();
 
+            ses.close();
             List<Person> results = genericPerson;
 
             String table = "<table>";

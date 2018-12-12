@@ -22,24 +22,30 @@ public class PassAround {
     public static CountDownLatch latchDisplay;
     public static CountDownLatch latchAdd;
 
-    public static String form = "<form name=\"send-name\" action=\"MainControl\" method=\"post\">\n" +
-"  First Name:<br>\n" +
-"  <input type=\"text\" name=\"FirstName\">\n" +
-"  <br>\n" +
-"  Last Name:<br>\n" +
-"  <input type=\"text\" name=\"LastName\">\n" +
-"  <br>\n" +
-"  Class Standing:<br>\n" +
-"  <input type=\"text\" name=\"ClassStanding\">\n" +
-"  <br>\n" +
-"  Building:<br>\n" +
-"  <input type=\"text\" name=\"Building\">\n" +
-"  <br>\n" +
-"  Apartment Number:<br>\n" +
-"  <input type=\"text\" name=\"ApartmentNumber\">\n" +
-"  <br>\n" +
-"  <input type=\"submit\" name=\"action\" value=\"Save\">\n" +
-"</form> ";
+    public static String FirstName;
+    public static String LastName;
+    public static String ClassStanding;
+    public static String Building;
+    public static int ApartmentNumber;
+
+    public static String form = "<form name=\"send-name\" action=\"MainControl\" method=\"post\">\n"
+        + "  First Name:<br>\n"
+        + "  <input type=\"text\" name=\"FirstName\">\n"
+        + "  <br>\n"
+        + "  Last Name:<br>\n"
+        + "  <input type=\"text\" name=\"LastName\">\n"
+        + "  <br>\n"
+        + "  Class Standing:<br>\n"
+        + "  <input type=\"text\" name=\"ClassStanding\">\n"
+        + "  <br>\n"
+        + "  Building:<br>\n"
+        + "  <input type=\"text\" name=\"Building\">\n"
+        + "  <br>\n"
+        + "  Apartment Number:<br>\n"
+        + "  <input type=\"text\" name=\"ApartmentNumber\">\n"
+        + "  <br>\n"
+        + "  <input type=\"submit\" name=\"action\" value=\"Save\">\n"
+        + "</form> ";
     public static String first = "<!DOCTYPE html><html><body>";
     public static String last = "</body></html>";
     public static String nav = "<form name=\"send-name\" action=\"MainControl\" method=\"post\">\n"
@@ -165,6 +171,5 @@ public class PassAround {
     public static void setCss(String css) {
         PassAround.css = css;
     }
-
 
 }

@@ -79,23 +79,14 @@ public class MainControl extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        PassAround.threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
         AppControl.mapCommand("All", new DisplayAll());
-        AppControl.mapCommand("Add", new AddPerson());
-
-        AppControl.handleRequest(action);
-        PassAround.threadPool.shutdown();
-//        try {
-//            PassAround.threadPool.awaitTermination(6, TimeUnit.SECONDS);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(MainControl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        AppControl.mapCommand("Save", new AddPerson());
 
         response.setContentType("text/html;charset=UTF-8");
-
+        PassAround.message = action;
         if ("All".equals(action)) {
             try (PrintWriter out = response.getWriter()) {
+                AppControl.handleRequest(action);
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
                 out.print(PassAround.table);
@@ -108,6 +99,21 @@ public class MainControl extends HttpServlet {
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
                 out.print(PassAround.form);
+                out.print(PassAround.message);
+                out.print(PassAround.last);
+            }
+        }
+        else if ("Save".equals(action)) {
+            PassAround.FirstName = request.getParameter("FirstName");
+            PassAround.LastName = request.getParameter("LastName");
+            PassAround.ClassStanding = request.getParameter("ClassStanding");
+            PassAround.Building = request.getParameter("Building");
+            PassAround.ApartmentNumber = Integer.parseInt(request.getParameter("ApartmentNumber"));
+            AppControl.handleRequest("Save");
+            try (PrintWriter out = response.getWriter()) {
+                out.print(PassAround.first);
+                out.print(PassAround.nav);
+                out.print("Person Added");
                 out.print(PassAround.message);
                 out.print(PassAround.last);
             }
