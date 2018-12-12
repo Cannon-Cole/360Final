@@ -21,6 +21,7 @@ public class PassAround {
     public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(howManyCores);
     public static CountDownLatch latchDisplay;
     public static CountDownLatch latchAdd;
+    public static CountDownLatch latchJSON;
 
     public static String FirstName;
     public static String LastName;
