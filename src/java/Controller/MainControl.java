@@ -1,27 +1,12 @@
 package Controller;
 
-import Model.Hibernate;
 import Model.PassAround;
-import Model.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.ehcache.search.parser.CustomParseException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 /**
  *
@@ -134,7 +119,7 @@ public class MainControl extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "This servlet handles the actions of a basic web app managing people";
     }// </editor-fold>
 
     public String getDataOutput() {

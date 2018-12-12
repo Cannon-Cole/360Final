@@ -6,6 +6,7 @@
 
 import Controller.AddPerson;
 import Controller.DisplayAll;
+import Controller.MainControl;
 import Controller.StoreJSON;
 import Model.PassAround;
 import org.junit.Test;
@@ -19,10 +20,10 @@ public class Testing {
 
     @Test
     public void AllTests() {
-        //Checks to make sure Display All works
+        //Checks to make sure the database query works
         DisplayAll displayPeople = new DisplayAll();
         displayPeople.handleIt();
-        //Checks to make sure select query came through
+        //Checks to make sure select query came through and the output was formatted
         assertTrue(PassAround.table.length() > 0);
         //Checks to make sure program is waiting for thread
         assertNotNull(PassAround.latchDisplay);
@@ -42,5 +43,11 @@ public class Testing {
         assertSame(PassAround.message, "Person Added");
         //Checks to make sure program is waiting for thread
         assertNotNull(PassAround.latchAdd);
+        Object MainControl;
+        
+        //Checks to make sure servlet started
+        MainControl main = new MainControl();
+        String message = main.getServletInfo();
+        assertSame(message, "This servlet handles the actions of a basic web app managing people");
     }
 }
