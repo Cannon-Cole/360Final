@@ -49,12 +49,15 @@ public class PassAround {
         + "</form> ";
     public static String first = "<!DOCTYPE html><html><body>";
     public static String last = "</body></html>";
-    public static String nav = "<form name=\"send-name\" action=\"MainControl\" method=\"post\">\n"
-        + "            <input type=\"submit\" name=\"action\" value=\"All\" />\n"
-        + "        </form>\n"
-        + "        <form name=\"send-name\" action=\"MainControl\" method=\"post\">\n"
-        + "            <input type=\"submit\" name=\"action\" value=\"Add\" />\n"
-        + "        </form>";
+    public static String nav = "<form name=\"send-name\" action=\"MainControl\" method=\"post\">\n" +
+"            <input type=\"submit\" name=\"action\" value=\"All\" />\n" +
+"        </form>\n" +
+"        <form name=\"send-name\" action=\"MainControl\" method=\"post\">\n" +
+"            <input type=\"submit\" name=\"action\" value=\"Add\" />\n" +
+"        </form>\n" +
+"        <form name=\"send-name\" action=\"MainControl\" method=\"post\">\n" +
+"            <input type=\"submit\" name=\"action\" value=\"JSON\">\n" +
+"        </form>";
     public static String css = "<style>\n"
         + "ul {\n"
         + "  list-style-type: none;\n"

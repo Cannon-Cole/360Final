@@ -5,9 +5,10 @@
  */
 package Controller;
 
-import Model.Hibernate;
 import Model.PassAround;
 import Model.Person;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +35,7 @@ public class StoreJSONThread implements Runnable {
             List genericPerson = query.list();
 
             ses.close();
+
             List<Person> results = genericPerson;
 
             String store = "";
@@ -41,11 +43,11 @@ public class StoreJSONThread implements Runnable {
             for (int i = 0; i < results.size(); i++) {
                 Person objToJ = new Person();
                 objToJ.setid(results.get(i).getid());
-                objToJ.setFirstName((results.get(i).getFirstName()));
-                objToJ.setLastName((results.get(i).getLastName()));
-                objToJ.setClassStanding((results.get(i).getClassStanding()));
-                objToJ.setBuilding((results.get(i).getBuilding()));
-                objToJ.setApartmentNumber((results.get(i).getApartmentNumber()));
+                objToJ.setFirstName(results.get(i).getFirstName());
+                objToJ.setLastName(results.get(i).getLastName());
+                objToJ.setClassStanding(results.get(i).getClassStanding());
+                objToJ.setBuilding(results.get(i).getBuilding());
+                objToJ.setApartmentNumber(results.get(i).getApartmentNumber());
 
                 JSONObject stringify = new JSONObject();
 
@@ -59,13 +61,24 @@ public class StoreJSONThread implements Runnable {
                 store += stringify.toJSONString();
             }
 
+            FileWriter file = new FileWriter("/Users/2bigshot/NetBeansProjects/ThreeSixtyFinal/JSON/Saved.txt");
+            try {
+                file.write(store);
+                PassAround.message = store;
+            } catch (IOException eio) {
+                eio.printStackTrace();
+            } finally {                      
+                file.flush();
+                file.close();
+            }
+            //PassAround.message = "JSON Saved";
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
 
         try {
-            PassAround.latchDisplay.countDown();
+            PassAround.latchJSON.countDown();
         } catch (Exception e) {
             System.err.println(e);
         }

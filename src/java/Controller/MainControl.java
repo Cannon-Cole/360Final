@@ -81,6 +81,7 @@ public class MainControl extends HttpServlet {
 
         AppControl.mapCommand("All", new DisplayAll());
         AppControl.mapCommand("Save", new AddPerson());
+        AppControl.mapCommand("JSON", new StoreJSON());
 
         response.setContentType("text/html;charset=UTF-8");
         PassAround.message = action;
@@ -90,7 +91,6 @@ public class MainControl extends HttpServlet {
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
                 out.print(PassAround.table);
-                out.print(PassAround.message);
                 out.print(PassAround.last);
             }
         }
@@ -99,7 +99,6 @@ public class MainControl extends HttpServlet {
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
                 out.print(PassAround.form);
-                out.print(PassAround.message);
                 out.print(PassAround.last);
             }
         }
@@ -109,11 +108,20 @@ public class MainControl extends HttpServlet {
             PassAround.ClassStanding = request.getParameter("ClassStanding");
             PassAround.Building = request.getParameter("Building");
             PassAround.ApartmentNumber = Integer.parseInt(request.getParameter("ApartmentNumber"));
-            AppControl.handleRequest("Save");
+            AppControl.handleRequest(action);
             try (PrintWriter out = response.getWriter()) {
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
                 out.print("Person Added");
+                out.print(PassAround.message);
+                out.print(PassAround.last);
+            }
+        }
+        else if ("JSON".equals(action)) {
+            AppControl.handleRequest(action);
+            try (PrintWriter out = response.getWriter()) {
+                out.print(PassAround.first);
+                out.print(PassAround.nav);
                 out.print(PassAround.message);
                 out.print(PassAround.last);
             }
