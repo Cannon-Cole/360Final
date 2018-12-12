@@ -110,6 +110,15 @@ public class MainControl extends HttpServlet {
                 out.print(PassAround.last);
             }
         }
+        else {
+            AppControl.handleRequest(action);
+        }
+        try (PrintWriter out = response.getWriter()) {
+            out.print(PassAround.first);
+            out.print(PassAround.nav);
+            out.print("Input Not Found");
+            out.print(PassAround.last);
+        }
     }
 
     /**
