@@ -9,7 +9,9 @@ import Model.Hibernate;
 import Model.PassAround;
 import Model.Person;
 import java.util.List;
-import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -19,27 +21,57 @@ public class DisplayAllThread implements Runnable {
 
     @Override
     public void run() {
-        PassAround.message = "in thread";
-        String hql = "SELECT * FROM Person";
-        Query query = Hibernate.getFactory().openSession().createQuery(hql);
-        List<Person> results = query.list();
-        String table = "<table>";
+        try {
+            PassAround.message = "thread";
+            SessionFactory factory = new Configuration().configure().buildSessionFactory();
+            SessionFactory fac = factory;
+            Session ses = fac.openSession();
 
-        for (int i = 0; i < results.size(); i++) {
-            table += "<tr>";
-            table += "<th>";
-            table += Integer.toString(results.get(i).getid());
-            table += results.get(i).getFirstName();
-            table += results.get(i).getLastName();
-            table += results.get(i).getClassStanding();
-            table += results.get(i).getBuilding();
-            table += results.get(i).getApartmentNumber();
-            table += "</th>";
-            table += "</tr>";
+            String hql = "SELECT p FROM Person p";
+            org.hibernate.query.Query<Person> query = ses.createQuery(hql);
+
+            List genericPerson = query.list();
+
+            List<Person> results = genericPerson;
+
+            String table = "<table>";
+
+            for (int i = 0; i < results.size(); i++) {
+                table += "<tr>";
+                table += "<td>";
+                table += Integer.toString(results.get(i).getid());
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getFirstName();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getLastName();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getClassStanding();
+                table += "</td>";
+                table += "<td>";
+                table += results.get(i).getBuilding();
+                table += "</td>";
+                table += "<td>";
+                table += Integer.toString(results.get(i).getApartmentNumber());
+                table += "</td>";
+                table += "</tr>";
+            }
+
+            table += "</table>";
+
+            PassAround.table = table;
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
         }
 
-        table += "</table>";
+        try {
+            PassAround.latchDisplay.countDown();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
-        PassAround.table = table;
     }
 }

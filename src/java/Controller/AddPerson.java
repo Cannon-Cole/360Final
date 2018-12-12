@@ -14,18 +14,18 @@ import java.util.logging.Logger;
  *
  * @author Cole
  */
-public class DisplayAll implements Handler {
+public class AddPerson implements Handler {
 
     @Override
     public void handleIt() {
         
         CountDownLatch latch = new CountDownLatch(1);
-        PassAround.latchDisplay = latch;
-        PassAround.threadPool.execute(new DisplayAllThread());
+        PassAround.latchAdd = latch;
+        PassAround.threadPool.execute(new AddPersonThread());
         try {
             latch.await();
         } catch (InterruptedException ex) {
-            Logger.getLogger(DisplayAll.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

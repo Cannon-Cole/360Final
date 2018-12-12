@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -74,63 +77,40 @@ public class MainControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-//        String action = request.getParameter("action");
-//
-//        PassAround.threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-//        AppControl.mapCommand("All", new DisplayAll());
-//
-//        AppControl.handleRequest(action);
-//
-//        PassAround.threadPool.shutdown();
-        try {
-            SessionFactory factory = new Configuration().configure().buildSessionFactory();
-            SessionFactory fac = factory;
-            Session ses = fac.openSession();
+        String action = request.getParameter("action");
 
-            String hql = "SELECT p FROM Person p";
-            Query<Person> query = ses.createQuery(hql);
+        PassAround.threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-            List genericPerson = query.list();
+        AppControl.mapCommand("All", new DisplayAll());
+        AppControl.mapCommand("Add", new AddPerson());
 
-            List<Person> results = genericPerson;
-
-            String table = "<table>";
-
-            for (int i = 0; i < results.size(); i++) {
-                table += "<tr>";
-                table += "<td>";
-                table += Integer.toString(results.get(i).getid());
-                table += "</td>";
-                table += "<td>";
-                table += results.get(i).getFirstName();
-                table += "</td>";
-                table += "<td>";
-                table += results.get(i).getLastName();
-                table += "</td>";
-                table += "<td>";
-                table += results.get(i).getClassStanding();
-                table += "</td>";
-                table += "<td>";
-                table += results.get(i).getBuilding();
-                table += "</td>";
-                table += "<td>";
-                table += Integer.toString(results.get(i).getApartmentNumber());
-                table += "</td>";
-                table += "</tr>";
-            }
-
-            table += "</table>";
-
-            PassAround.table = table;
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+        AppControl.handleRequest(action);
+        PassAround.threadPool.shutdown();
+//        try {
+//            PassAround.threadPool.awaitTermination(6, TimeUnit.SECONDS);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(MainControl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         response.setContentType("text/html;charset=UTF-8");
 
-        try (PrintWriter out = response.getWriter()) {
-            out.print(PassAround.table);
+        if ("All".equals(action)) {
+            try (PrintWriter out = response.getWriter()) {
+                out.print(PassAround.first);
+                out.print(PassAround.nav);
+                out.print(PassAround.table);
+                out.print(PassAround.message);
+                out.print(PassAround.last);
+            }
+        }
+        else if ("Add".equals(action)) {
+            try (PrintWriter out = response.getWriter()) {
+                out.print(PassAround.first);
+                out.print(PassAround.nav);
+                out.print(PassAround.form);
+                out.print(PassAround.message);
+                out.print(PassAround.last);
+            }
         }
     }
 
