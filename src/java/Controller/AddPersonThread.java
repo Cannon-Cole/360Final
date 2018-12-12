@@ -36,7 +36,7 @@ public class AddPersonThread implements Runnable {
                 Person per = new Person(PassAround.FirstName, PassAround.LastName, PassAround.ClassStanding, PassAround.Building, PassAround.ApartmentNumber);
                 PersonID = (Integer) ses.save(per);
                 tx.commit();
-
+                PassAround.message = "Person Added";
             } catch (HibernateException e) {
                 if (tx != null) {
                     tx.rollback();

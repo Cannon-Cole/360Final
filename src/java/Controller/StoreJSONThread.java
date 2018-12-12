@@ -64,7 +64,7 @@ public class StoreJSONThread implements Runnable {
             FileWriter file = new FileWriter("/Users/2bigshot/NetBeansProjects/ThreeSixtyFinal/JSON/Saved.txt");
             try {
                 file.write(store);
-                PassAround.message = store;
+                PassAround.message = "Database exported to JSON";
             } catch (IOException eio) {
                 eio.printStackTrace();
             } finally {                      

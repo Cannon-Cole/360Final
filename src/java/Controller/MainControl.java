@@ -112,7 +112,6 @@ public class MainControl extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 out.print(PassAround.first);
                 out.print(PassAround.nav);
-                out.print("Person Added");
                 out.print(PassAround.message);
                 out.print(PassAround.last);
             }
